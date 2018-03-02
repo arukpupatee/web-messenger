@@ -13,8 +13,9 @@ const io = socketIo(server);
 
 io.on("connection", socket => {
     console.log("New client connected");
-
-    socket.on("disconnect", () => console.log("Client disconnected"));
+    socket.on("disconnect", () => {
+        console.log("Client disconnected")
+    });
 });
 
 server.listen(port, () => console.log('Server Listening on port', port));
