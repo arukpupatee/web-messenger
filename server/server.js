@@ -20,46 +20,37 @@ const io = socketIo(server);
 io.on("connection", socket => {
     console.log("New client connected");
 
-    socket.on('login', username => {
+    socket.on('login', async username => {
         socket.user = username;
         socket.emit('login success', username);
-        socket.emit('new message', {
+        var data = await Messages.create({
             type: 'info',
             action: 'joined',
             user: socket.user
         });
-        socket.broadcast.emit('new massage', {
-            type: 'info',
-            action: 'joined',
-            user: socket.user
-        });
+        socket.emit('new message', data);
+        socket.broadcast.emit('new massage', data);
     });
 
-    socket.on('new message', data => {
-        socket.emit('new message', {
+    socket.on('new message', async data => {
+        var data = await Messages.create({
             type: 'message',
             user: data.user,
             message: data.message
         });
-        socket.broadcast.emit('new message', {
-            type: 'message',
-            user: data.user,
-            message: data.message
-        });
+        socket.emit('new message', data);
+        socket.broadcast.emit('new message', data);
     });
 
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async () => {
         console.log("Client disconnected")
-        socket.emit('new message', {
+        var data = await Messages.create({
             type: 'info',
             action: 'left',
             user: socket.user
         });
-        socket.broadcast.emit('new massage', {
-            type: 'info',
-            action: 'left',
-            user: socket.user
-        });
+        socket.emit('new message', data);
+        socket.broadcast.emit('new massage', data);
     });
 });
 
