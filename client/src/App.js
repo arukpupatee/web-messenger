@@ -3,8 +3,7 @@ import socketIOClient from 'socket.io-client';
 
 import './App.css';
 
-import { MessageBoard } from './components/MessageBoard'
-import { MessageInput } from './components/MessageInput'
+import { MessengerWindow } from './components/MessengerWindow';
 
 class App extends Component {
   constructor() {
@@ -28,8 +27,7 @@ class App extends Component {
         <p className="App-intro">
           Web Messenger for FireOneOne Interview
         </p>
-        <MessageBoard socket={socket} />
-        <MessageInput socket={socket} />
+        <MessengerWindow socket={socket} />
       </div>
     );
   }

@@ -5,7 +5,9 @@ export class MessageBoard extends React.Component {
     super(props);
 
     const socket = props.socket;
-    socket.on('new message', data => {this.setState({ message: data.message})});
+    socket.on('new message', data => {
+        this.setState({ message: data.message});
+    });
     
     this.state = {
         message: false,
