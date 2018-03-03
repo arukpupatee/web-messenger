@@ -3,7 +3,7 @@ const http = require("http");
 const socketIo = require("socket.io");
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 const api = require("./routes/api");
 app.use('/api', api);
@@ -13,6 +13,11 @@ const io = socketIo(server);
 
 io.on("connection", socket => {
     console.log("New client connected");
+
+    socket.emit('new message', {
+        message: 'Hello User'
+    });
+
     socket.on("disconnect", () => {
         console.log("Client disconnected")
     });
