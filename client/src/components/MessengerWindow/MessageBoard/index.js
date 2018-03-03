@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'moment';
 
 export class MessageBoard extends React.Component {
   constructor(props) {
@@ -19,10 +20,11 @@ export class MessageBoard extends React.Component {
   render() {
     var { messageList } = this.state;
     var line = messageList.map((data, index) => {
+        var timestamp = Moment(data.timestamp).format('DD/MM/YYYY hh:mm:ss');
         if (data.type === 'message')
-            return (<p key={index}>{data.user}: {data.message}</p>);
+            return (<p key={index}>{timestamp} {data.user}: {data.message}</p>);
         else
-            return (<p key={index}>{data.user} has {data.action}</p>);
+            return (<p key={index}>{timestamp} {data.user} has {data.action}</p>);
     });
     return (
         <div>
