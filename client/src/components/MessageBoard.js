@@ -8,7 +8,6 @@ export class MessageBoard extends React.Component {
     socket.on("new message", data => this.setState({ message: data.message}));
     this.state = {
         message: false,
-        socket: socket
     };
   }
 
