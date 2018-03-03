@@ -27,7 +27,6 @@ messagesSchema.statics.findLast = function (n) {
     return new Promise((resolve, reject) =>{
         query.exec((err, results) =>{
             if (err) reject(error);
-
             resolve(results.reverse());
         });
     });

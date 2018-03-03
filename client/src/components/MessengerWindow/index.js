@@ -8,9 +8,26 @@ export class MessengerWindow extends React.Component {
     const { socket } = this.props;
     const { user } = this.props;
     return (
-        <div>
-            <MessageBoard socket={socket} />
-            <MessageInput socket={socket} user={user} />
+        <div className='container-fluid'>
+          <div className='row'>
+            <div className='col-lg-12'>
+              <div className='jumbotron'>
+                <h1 className='display-4'>Web Messenger</h1>
+                <p>Login as {user}</p>
+              </div>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-lg-12'>
+              <MessageBoard socket={socket} />
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-lg-12'>
+              <MessageInput socket={socket} user={user} />
+            </div>
+          </div>
+          <br />
         </div>
     );
   }

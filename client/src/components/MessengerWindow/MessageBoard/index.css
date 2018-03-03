@@ -1,0 +1,20 @@
+.boardScroll {
+    height: 400px;
+    overflow-y: scroll;
+}
+.timestamp {
+    color: gray;
+    font-style: italic;
+}
+.info {
+    font-style: italic;
+}
+.username {
+    font-weight: bold;
+}
+.joined {
+    color: green;
+}
+.left {
+    color: red;
+}

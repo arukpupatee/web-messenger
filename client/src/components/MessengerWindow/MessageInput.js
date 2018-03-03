@@ -28,13 +28,14 @@ export class MessageInput extends React.Component {
 
   render() {
     return (
-        <div>
-            <input 
-                type="text" 
-                ref={input => { this.textInput = input }} 
-                onKeyPress={this.handleTextInputEnter}
-            />
-            <button type="button" onClick={this.handleButtonSubmit}>Send</button>
+        <div className='input-group input-group-lg'>
+          <input 
+            className='form-control' aria-label='Username' aria-describedby='basic-addon1'
+            type='text' 
+            ref={input => { this.textInput = input }} 
+            onKeyPress={this.handleTextInputEnter}
+          />
+          <button type='button' className='btn btn-primary' onClick={this.handleButtonSubmit}>Send</button>
         </div>
     );
   }
