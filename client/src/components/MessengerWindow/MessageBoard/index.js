@@ -19,7 +19,10 @@ export class MessageBoard extends React.Component {
   render() {
     var { messageList } = this.state;
     var line = messageList.map((data, index) => {
-        return (<p key={index}>{data.user}: {data.message}</p>);
+        if (data.type === 'message')
+            return (<p key={index}>{data.user}: {data.message}</p>);
+        else
+            return (<p key={index}>{data.user} has {data.action}</p>);
     });
     return (
         <div>

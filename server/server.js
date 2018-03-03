@@ -15,7 +15,18 @@ io.on("connection", socket => {
     console.log("New client connected");
 
     socket.on('login', username => {
+        socket.user = username;
         socket.emit('login success', username);
+        socket.emit('new message', {
+            type: 'info',
+            action: 'joined',
+            user: socket.user
+        });
+        socket.broadcast.emit('new massage', {
+            type: 'info',
+            action: 'joined',
+            user: socket.user
+        });
     });
 
     socket.on('new message', data => {
@@ -33,6 +44,16 @@ io.on("connection", socket => {
 
     socket.on("disconnect", () => {
         console.log("Client disconnected")
+        socket.emit('new message', {
+            type: 'info',
+            action: 'left',
+            user: socket.user
+        });
+        socket.broadcast.emit('new massage', {
+            type: 'info',
+            action: 'left',
+            user: socket.user
+        });
     });
 });
 
