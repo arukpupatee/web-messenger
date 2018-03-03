@@ -4,11 +4,12 @@ import socketIOClient from 'socket.io-client';
 import './App.css';
 
 import { MessageBoard } from './components/MessageBoard'
+import { MessageInput } from './components/MessageInput'
 
 class App extends Component {
   constructor() {
     super();
-    
+
     const endpoint= "http://localhost:5000";
     const socket = socketIOClient(endpoint);
     this.state = {
@@ -27,7 +28,8 @@ class App extends Component {
         <p className="App-intro">
           Web Messenger for FireOneOne Interview
         </p>
-        <MessageBoard socket={socket}/>
+        <MessageBoard socket={socket} />
+        <MessageInput socket={socket} />
       </div>
     );
   }
