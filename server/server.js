@@ -14,10 +14,6 @@ const io = socketIo(server);
 io.on("connection", socket => {
     console.log("New client connected");
 
-    socket.emit('new message', {
-        message: 'Hello User'
-    });
-
     socket.on('new message', message => {
         socket.emit('new message', {
             message: message
