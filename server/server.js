@@ -14,12 +14,20 @@ const io = socketIo(server);
 io.on("connection", socket => {
     console.log("New client connected");
 
-    socket.on('new message', message => {
+    socket.on('login', username => {
+        socket.emit('login success', username);
+    });
+
+    socket.on('new message', data => {
         socket.emit('new message', {
-            message: message
+            type: 'message',
+            user: data.user,
+            message: data.message
         });
         socket.broadcast.emit('new message', {
-            message: message
+            type: 'message',
+            user: data.user,
+            message: data.message
         });
     });
 

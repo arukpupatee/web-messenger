@@ -11,14 +11,37 @@ class App extends Component {
 
     const endpoint= "http://localhost:5000";
     const socket = socketIOClient(endpoint);
+
+    socket.on('login success', user => this.setState({user: user}));
+
     this.state = {
       socket: socket,
-      endpoint: endpoint
+      endpoint: endpoint,
+      user: null
     };
+  }
+  handleTextInputLoginEnter = e => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        var username = this.textInputLogin.value;
+        this.login(username);
+        this.textInputLogin.value = '';
+    }
+  }
+  handleButtonLoginSubmit = e => {
+    e.preventDefault();
+    var username = this.textInputLogin.value;
+    this.login(username);
+    this.textInputLogin.value = '';
+  }
+  login = username => {
+    const { socket } = this.state;
+    socket.emit('login', username);
   }
 
   render() {
     const { socket } = this.state;
+    const { user } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -27,7 +50,19 @@ class App extends Component {
         <p className="App-intro">
           Web Messenger for FireOneOne Interview
         </p>
-        <MessengerWindow socket={socket} />
+        {user
+          ? <MessengerWindow socket={socket} user={user} />
+          : <div>
+              <span>Username: </span>
+              <input 
+                  type="text" 
+                  ref={input => { this.textInputLogin = input }} 
+                  onKeyPress={this.handleTextInputLoginEnter}
+              />
+              <button type="button" onClick={this.handleButtonLoginSubmit}>Login</button>
+            </div>
+        }
+        
       </div>
     );
   }

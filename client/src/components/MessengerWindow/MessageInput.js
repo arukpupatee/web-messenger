@@ -1,13 +1,6 @@
 import React from 'react';
 
 export class MessageInput extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-
-    };
-  }
   handleTextInputEnter = e => {
     if (e.key === 'Enter') {
         e.preventDefault();
@@ -24,7 +17,13 @@ export class MessageInput extends React.Component {
   }
   submitMessage = message => {
     const { socket } = this.props;
-    socket.emit('new message', message);
+    const { user } = this.props;
+    const data = {
+      type: 'message',
+      user: user,
+      message: message
+    }
+    socket.emit('new message', data);
   }
 
   render() {
