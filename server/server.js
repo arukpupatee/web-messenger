@@ -2,8 +2,12 @@ const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 const app = express();
+var mongoose = require('mongoose');
 
 const port = process.env.PORT || 5000;
+
+mongoose.connect('mongodb://localhost/WebMessenger', { config: { autoIndex: false} });
+mongoose.Promise = global.Promise;
 
 const api = require("./routes/api");
 app.use('/api', api);
