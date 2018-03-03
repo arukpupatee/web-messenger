@@ -22,14 +22,21 @@ io.on("connection", socket => {
 
     socket.on('login', async username => {
         socket.user = username;
-        socket.emit('login success', username);
+        
+        socket.emit('login success', {
+            user: socket.user
+        });
         var data = await Messages.create({
             type: 'info',
             action: 'joined',
             user: socket.user
         });
-        socket.emit('new message', data);
         socket.broadcast.emit('new massage', data);
+    });
+
+    socket.on('fetch history', async () => {
+        var history = await Messages.findLast(100);
+        socket.emit('fetch history', history);
     });
 
     socket.on('new message', async data => {

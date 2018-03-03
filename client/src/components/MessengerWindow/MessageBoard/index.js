@@ -9,11 +9,12 @@ export class MessageBoard extends React.Component {
     };
 
     const socket = props.socket;
-    var { messageList } = this.state
+    socket.emit('fetch history');
+    socket.on('fetch history', history => this.setState({messageList: history}));
     socket.on('new message', data => {
-        if (messageList.length > 100) messageList.shift();
-        messageList.push(data);
-        this.setState({messageList: messageList});
+        if (this.state.messageList.length > 100) this.state.messageList.shift();
+        this.state.messageList.push(data);
+        this.setState({messageList: this.state.messageList});
     });
   }
 
