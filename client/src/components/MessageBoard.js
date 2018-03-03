@@ -1,18 +1,15 @@
 import React from 'react';
-import socketIOClient from 'socket.io-client';
 
 export class MessageBoard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    const socket = props.socket;
+    socket.on("new message", data => this.setState({ message: data.message}));
     this.state = {
         message: false,
-        endpoint: "http://localhost:5000"
+        socket: socket
     };
-  }
-  componentDidMount() {
-    const { endpoint } = this.state;
-    const socket = socketIOClient(endpoint);
-    socket.on("new message", data => this.setState({ message: data.message}));
   }
 
   render() {

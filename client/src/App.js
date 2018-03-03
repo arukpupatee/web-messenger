@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import socketIOClient from 'socket.io-client';
+
 import './App.css';
 
 import { MessageBoard } from './components/MessageBoard'
@@ -6,11 +8,17 @@ import { MessageBoard } from './components/MessageBoard'
 class App extends Component {
   constructor() {
     super();
+    
+    const endpoint= "http://localhost:5000";
+    const socket = socketIOClient(endpoint);
+    this.state = {
+      socket: socket,
+      endpoint: endpoint
+    };
   }
 
-  
   render() {
-    
+    const { socket } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -19,7 +27,7 @@ class App extends Component {
         <p className="App-intro">
           Web Messenger for FireOneOne Interview
         </p>
-        <MessageBoard />
+        <MessageBoard socket={socket}/>
       </div>
     );
   }
