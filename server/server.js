@@ -43,21 +43,22 @@ io.on("connection", function(socket) {
             type: 'info',
             user: socket.user,
             action: 'joined',
-            timestamp: Date.now
+            timestamp: Date.now()
         };
         var history = await Messages.findLast(100);
         socket.emit('login success', {
             data: data,
             user: socket.user,
-            messageHistory: history,
-            timestamp: Date.now
+            messageHistory: history
         });
     });
 
     socket.on('new message', async messageData => {
-        socket.emit('new message', messageData);
-        socket.broadcast.emit('new message', messageData);
-        Messages.create(messageData);
+        var data = messageData;
+        data.timestamp = Date.now();
+        socket.emit('new message', data);
+        socket.broadcast.emit('new message', data);
+        Messages.create(data);
     });
 
     socket.on("disconnect", async () => {
@@ -67,7 +68,7 @@ io.on("connection", function(socket) {
                 type: 'info',
                 user: user,
                 action: 'left',
-                timestamp: Date.now
+                timestamp: Date.now()
             }
             io.sockets.emit('new message', data);
             Messages.create(data);

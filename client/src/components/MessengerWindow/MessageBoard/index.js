@@ -23,7 +23,7 @@ export class MessageBoard extends React.Component {
   render() {
     var { messageList } = this.state;
     var line = messageList.map((data, index) => {
-        var timestamp = Moment(data.timestamp).format('DD/MM/YYYY hh:mm:ss');
+        let timestamp = Moment(data.timestamp).format('DD/MM/YYYY hh:mm:ss');
         if (data.type === 'message')
             return (
                 <div className='row' key={index}>
