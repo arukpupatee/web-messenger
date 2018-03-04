@@ -1,6 +1,6 @@
 FROM node:8
 
-WORKDIR /usr/src
+WORKDIR /usr/src/client
 
 ENV PATH /usr/src/node_modules/.bin:$PATH
 

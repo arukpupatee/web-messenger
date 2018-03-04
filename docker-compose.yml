@@ -13,7 +13,7 @@ services:
     build:
       context: ./server/
     volumes:
-      - ./server:/usr/src/
+      - ./server:/usr/src/server
       - ./server/package.json:/usr/src/package.json
     ports:
       - '5000:5000'
@@ -22,7 +22,7 @@ services:
     build:
       context: ./client/
     volumes:
-      - ./client:/usr/src/
+      - ./client:/usr/src/client
       - /usr/src/node_modules
     ports:
       - '3000:80'
