@@ -31,14 +31,14 @@ class App extends Component {
         e.preventDefault();
         var username = this.textInputLogin.value;
         this.login(username);
-        this.textInputLogin.value = '';
+        this.loginButton.disabled = true;
     }
   }
   handleButtonLoginSubmit = e => {
     e.preventDefault();
     var username = this.textInputLogin.value;
     this.login(username);
-    this.textInputLogin.value = '';
+    this.loginButton.disabled = true;
   }
   login = username => {
     const { socket } = this.state;
@@ -71,7 +71,13 @@ class App extends Component {
                       ref={input => { this.textInputLogin = input }} 
                       onKeyPress={this.handleTextInputLoginEnter}
                   />
-                  <button type='button' className='btn btn-primary' onClick={this.handleButtonLoginSubmit}>Login</button>
+                  <button 
+                    type='button' className='btn btn-primary' 
+                    onClick={this.handleButtonLoginSubmit} 
+                    ref={button => {this.loginButton = button}}
+                  >
+                    Login
+                  </button>
                 </div>
               </div>
           }
