@@ -14,14 +14,16 @@ class App extends Component {
     const socket = socketIOClient(endpoint);
 
     socket.on('login success', loginData => {
-      socket.emit('new message', loginData.data);
+      this.setState({messageHistory: loginData.messageHistory});
       this.setState({user: loginData.user});
+      socket.emit('new message', loginData.data);
     });
 
     this.state = {
       socket: socket,
       endpoint: endpoint,
-      user: null
+      user: null,
+      messageHistory: []
     };
   }
   handleTextInputLoginEnter = e => {
@@ -46,12 +48,13 @@ class App extends Component {
   render() {
     const { socket } = this.state;
     const { user } = this.state;
+    const { messageHistory } = this.state;
     return (
       <div className='App'>
         <AppNavbar />
         <div className='container'>
           {user
-            ? <MessengerWindow socket={socket} user={user} />
+            ? <MessengerWindow socket={socket} user={user} messageHistory={messageHistory} />
             : <div>
                 <div className='jumbotron'>
                   <h1 className='display-4'>Web Messenger</h1>

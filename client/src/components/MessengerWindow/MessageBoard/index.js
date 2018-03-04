@@ -7,15 +7,11 @@ export class MessageBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        messageList: []
+        messageList: props.messageHistory
     };
 
     const socket = props.socket;
-    socket.emit('fetch history');
-    socket.on('fetch history', history => {
-        this.setState({messageList: history})
-        this.board.scrollTop = this.board.scrollHeight;
-    });
+    
     socket.on('new message', data => {
         if (this.state.messageList.length > 100) this.state.messageList.shift();
         this.state.messageList.push(data);

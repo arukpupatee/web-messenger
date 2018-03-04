@@ -29,15 +29,12 @@ io.on("connection", function(socket) {
             user: socket.user,
             action: 'joined'
         };
+        var history = await Messages.findLast(100);
         socket.emit('login success', {
             data: data,
-            user: socket.user
+            user: socket.user,
+            messageHistory: history
         });
-    });
-
-    socket.on('fetch history', async () => {
-        var history = await Messages.findLast(100);
-        socket.emit('fetch history', history);
     });
 
     socket.on('new message', async messageData => {

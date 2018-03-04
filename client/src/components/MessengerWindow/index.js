@@ -7,6 +7,7 @@ export class MessengerWindow extends React.Component {
   render() {
     const { socket } = this.props;
     const { user } = this.props;
+    const { messageHistory } = this.props;
     return (
         <div className='container-fluid'>
           <div className='row'>
@@ -19,7 +20,7 @@ export class MessengerWindow extends React.Component {
           </div>
           <div className='row'>
             <div className='col-lg-12'>
-              <MessageBoard socket={socket} />
+              <MessageBoard socket={socket} messageHistory={messageHistory} />
             </div>
           </div>
           <div className='row'>
