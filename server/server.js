@@ -41,9 +41,9 @@ io.on("connection", function(socket) {
     });
 
     socket.on('new message', async messageData => {
-        var data = await Messages.create(messageData);
-        socket.emit('new message', data);
-        socket.broadcast.emit('new message', data);
+        socket.emit('new message', messageData);
+        socket.broadcast.emit('new message', messageData);
+        Messages.create(messageData);
     });
 
     socket.on("disconnect", async () => {
