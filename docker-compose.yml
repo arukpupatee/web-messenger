@@ -25,4 +25,4 @@ services:
       - ./client:/usr/src/
       - /usr/src/node_modules
     ports:
-      - '3000:3000'
+      - '3000:80'
