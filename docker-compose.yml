@@ -26,4 +26,4 @@ services:
       - ./client:/usr/src/client
       - /usr/src/client/node_modules
     ports:
-      - '3000:80'
+      - '80:3000'
