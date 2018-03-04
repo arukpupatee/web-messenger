@@ -13,10 +13,10 @@ const dbOptions = {
     reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
     reconnectInterval: 5000
 }
-//const mongooseUrl = 'mongodb://localhost/WebMessenger'; // for local dev
-const mongooseUrl = 'mongodb://mongodb:27017/WebMessenger'; // for docker
+//const mongoUrl = 'mongodb://localhost/WebMessenger'; // for local dev
+const mongoUrl = 'mongodb://mongodb:27017/WebMessenger'; // for docker
 const connectMongoWithRetry = () => { // reconnect when fail in initial connection
-    mongoose.connect(mongooseUrl, dbOptions)
+    mongoose.connect(mongoUrl, dbOptions)
         .catch(err => {
             console.log('Failed to connect to mongo on startup - retrying in 5 sec');
             setTimeout(connectMongoWithRetry, 5000);
