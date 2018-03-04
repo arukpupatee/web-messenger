@@ -10,10 +10,13 @@ class App extends Component {
   constructor() {
     super();
 
-    const endpoint= 'http://localhost:5000';
+    const endpoint = 'http://localhost:5000';
     const socket = socketIOClient(endpoint);
 
-    socket.on('login success', data => this.setState({user: data.user}));
+    socket.on('login success', loginData => {
+      socket.emit('new message', loginData.data);
+      this.setState({user: loginData.user});
+    });
 
     this.state = {
       socket: socket,

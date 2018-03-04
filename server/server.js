@@ -17,21 +17,22 @@ app.use('/api', api);
 const server = http.createServer(app);
 const io = socketIo(server);
 
-io.on("connection", socket => {
+io.on("connection", function(socket) {
     console.log("New client connected");
+    var user = null;
 
     socket.on('login', async username => {
-        socket.user = username;
-        
-        socket.emit('login success', {
-            user: socket.user
-        });
-        var data = await Messages.create({
+        user = username;
+        socket.user = user;
+        var data = {
             type: 'info',
-            action: 'joined',
+            user: socket.user,
+            action: 'joined'
+        };
+        socket.emit('login success', {
+            data: data,
             user: socket.user
         });
-        socket.broadcast.emit('new massage', data);
     });
 
     socket.on('fetch history', async () => {
@@ -39,25 +40,23 @@ io.on("connection", socket => {
         socket.emit('fetch history', history);
     });
 
-    socket.on('new message', async data => {
-        var data = await Messages.create({
-            type: 'message',
-            user: data.user,
-            message: data.message
-        });
+    socket.on('new message', async messageData => {
+        var data = await Messages.create(messageData);
         socket.emit('new message', data);
         socket.broadcast.emit('new message', data);
     });
 
     socket.on("disconnect", async () => {
-        console.log("Client disconnected")
-        var data = await Messages.create({
-            type: 'info',
-            action: 'left',
-            user: socket.user
-        });
-        socket.emit('new message', data);
-        socket.broadcast.emit('new massage', data);
+        console.log("Client disconnected");
+        if (user != null){
+            var data = {
+                type: 'info',
+                user: user,
+                action: 'left',
+            }
+            io.sockets.emit('new message', data);
+            Messages.create(data);
+        }
     });
 });
 
