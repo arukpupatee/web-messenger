@@ -33,10 +33,10 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 io.on("connection", function(socket) {
+    console.log("New client connected");
     var user = null;
 
     socket.on('login', async username => {
-        console.log("New client connected");
         user = username;
         socket.user = user;
         var data = {
