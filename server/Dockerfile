@@ -9,4 +9,4 @@ RUN npm install --global nodemon
 ADD package.json /usr/src/package.json
 RUN npm install
 
-CMD ["./wait-for-it.sh","mongodb:27017","nodemon","--legacy-watch"]
+CMD ["nodemon","--legacy-watch"]
