@@ -42,13 +42,15 @@ io.on("connection", function(socket) {
         var data = {
             type: 'info',
             user: socket.user,
-            action: 'joined'
+            action: 'joined',
+            timestamp: Date.now
         };
         var history = await Messages.findLast(100);
         socket.emit('login success', {
             data: data,
             user: socket.user,
-            messageHistory: history
+            messageHistory: history,
+            timestamp: Date.now
         });
     });
 
@@ -65,6 +67,7 @@ io.on("connection", function(socket) {
                 type: 'info',
                 user: user,
                 action: 'left',
+                timestamp: Date.now
             }
             io.sockets.emit('new message', data);
             Messages.create(data);
