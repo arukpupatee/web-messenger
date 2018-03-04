@@ -1,29 +1,27 @@
-version: "3"
+version: "2"
 services:
   mongodb:
     image: mongo
-    container_name: "mongodb"
+    container_name: mongodb
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     ports:
-      - "27017:27017"
+      - 27017:27017
   server:
-    container_name: "web-messenger-server"
-    build:
-      context: ./server/
+    container_name: web-messenger-server
+    build: ./server/
     volumes:
-      - ./server:/usr/src/server
-      - ./server/package.json:/usr/src/server/package.json
-      - /usr/src/server/node_modules
+      - ./server:/usr/src/
+      - ./server/package.json:/usr/src/package.json
+      - /usr/src/node_modules
     ports:
-      - '5000:5000'
+      - 5000:5000
   client:
-    container_name: "web-messenger-client"
-    build:
-      context: ./client/
+    container_name: web-messenger-client
+    build: ./client/
     volumes:
-      - ./client:/usr/src/client
-      - /usr/src/client/node_modules
+      - ./client:/usr/src/
+      - /usr/src/node_modules
     ports:
-      - '80:3000'
+      - 3000:3000
