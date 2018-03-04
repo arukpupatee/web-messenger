@@ -14,7 +14,8 @@ services:
       context: ./server/
     volumes:
       - ./server:/usr/src/server
-      - ./server/package.json:/usr/src/package.json
+      - ./server/package.json:/usr/src/server/package.json
+      - /usr/src/server/node_modules
     ports:
       - '5000:5000'
   client:
@@ -23,6 +24,6 @@ services:
       context: ./client/
     volumes:
       - ./client:/usr/src/client
-      - /usr/src/node_modules
+      - /usr/src/client/node_modules
     ports:
       - '3000:80'
