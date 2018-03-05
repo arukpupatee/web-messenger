@@ -4,6 +4,13 @@ import { MessageBoard } from './MessageBoard'
 import { MessageInput } from './MessageInput'
 
 export class MessengerWindow extends React.Component {
+  /*
+  props = {
+    socket: object, // for use socket
+    user: String,
+    messageHistory: [ message ] // array of message history
+  }
+  */
   render() {
     const { socket } = this.props;
     const { user } = this.props;

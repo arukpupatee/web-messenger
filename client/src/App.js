@@ -11,12 +11,24 @@ class App extends Component {
     super();
 
     const endpoint = 'http://localhost:5000';
-    const socket = socketIOClient(endpoint);
+    const socket = socketIOClient(endpoint); // connect to socket
 
     socket.on('login success', loginData => {
-      this.setState({messageHistory: loginData.messageHistory});
-      this.setState({user: loginData.user});
-      socket.emit('new message', loginData.data);
+      /*
+      loginData = {
+        data: {
+          type: String,
+          user: String,
+          action: String,
+          timestamp: Date
+        }
+        user: String,
+        messageHistory: [ json ] // array of message that format same loginData.data
+      }
+      */
+      this.setState({messageHistory: loginData.messageHistory}); // save message to history
+      this.setState({user: loginData.user}); // save user
+      socket.emit('new message', loginData.data); // send user joined notification
     });
 
     this.state = {
@@ -26,23 +38,27 @@ class App extends Component {
       messageHistory: []
     };
   }
+  /* event handler */
   handleTextInputLoginEnter = e => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter') { // if press Enter at text input
         e.preventDefault();
         var username = this.textInputLogin.value;
-        this.login(username);
-        this.loginButton.disabled = true;
+        this.login(username); // login request
+        this.loginButton.disabled = true; // make user can't login again
     }
   }
   handleButtonLoginSubmit = e => {
     e.preventDefault();
     var username = this.textInputLogin.value;
-    this.login(username);
-    this.loginButton.disabled = true;
+    this.login(username); // login request
+    this.loginButton.disabled = true; // make user can't login again
   }
   login = username => {
+    /*
+    username = String
+    */
     const { socket } = this.state;
-    socket.emit('login', username);
+    socket.emit('login', username); // send login request
   }
 
   render() {
@@ -54,7 +70,9 @@ class App extends Component {
         <AppNavbar />
         <div className='container'>
           {user
+            /* if user login -> display MessageWindow */
             ? <MessengerWindow socket={socket} user={user} messageHistory={messageHistory} />
+            /* if user doesn't login -> display Login Window */
             : <div>
                 <div className='jumbotron'>
                   <h1 className='display-4'>Web Messenger</h1>

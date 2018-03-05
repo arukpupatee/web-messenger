@@ -1,21 +1,31 @@
 import React from 'react';
 
 export class MessageInput extends React.Component {
+  /*
+  props = {
+    socket: object, // for use socket
+    user: String
+  }
+  */
+  /* event handler */
   handleTextInputEnter = e => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter') { // if press Enter at text input
         e.preventDefault();
         var message = this.textInput.value;
-        this.submitMessage(message);
-        this.textInput.value = '';
+        this.submitMessage(message); // send message
+        this.textInput.value = ''; // clear message input
     }
   }
   handleButtonSubmit = e => {
     e.preventDefault();
     var message = this.textInput.value;
-    this.submitMessage(message);
-    this.textInput.value = '';
+    this.submitMessage(message); // send message
+    this.textInput.value = ''; // clear message input
   }
   submitMessage = message => {
+    /*
+    message = String
+    */
     const { socket } = this.props;
     const { user } = this.props;
     const data = {
@@ -23,7 +33,7 @@ export class MessageInput extends React.Component {
       user: user,
       message: message
     }
-    socket.emit('new message', data);
+    socket.emit('new message', data); // send message to server
   }
 
   render() {

@@ -5,26 +5,33 @@ import './index.css';
 
 export class MessageBoard extends React.Component {
   constructor(props) {
+    /*
+    props = {
+        socket: object, // for use socket
+        messageHistory: [ message ] // array of message history
+    }
+    */
     super(props);
     this.state = {
-        messageList: props.messageHistory
+        messageList: props.messageHistory // initialize message in board to history
     };
 
     const socket = props.socket;
     
     socket.on('new message', data => {
-        if (this.state.messageList.length > 100) this.state.messageList.shift();
-        this.state.messageList.push(data);
-        this.setState({messageList: this.state.messageList});
-        this.board.scrollTop = this.board.scrollHeight;
+        if (this.state.messageList.length > 100) this.state.messageList.shift(); // if message > 100 -> clear older
+        this.state.messageList.push(data); // display new message
+        this.setState({messageList: this.state.messageList}); // add message to messageList
+        this.board.scrollTop = this.board.scrollHeight; // scroll to downsid of board
     });
   }
 
   render() {
     var { messageList } = this.state;
+    /* loop to create each line of message */
     var line = messageList.map((data, index) => {
-        let timestamp = Moment(data.timestamp).format('DD/MM/YYYY hh:mm:ss');
-        if (data.type === 'message')
+        let timestamp = Moment(data.timestamp).format('DD/MM/YYYY hh:mm:ss'); // convert timestamp
+        if (data.type === 'message') // if message type is message
             return (
                 <div className='row' key={index}>
                     <div className='col-md-2 timestamp'>
@@ -35,7 +42,7 @@ export class MessageBoard extends React.Component {
                     </div>
                 </div>
             );
-        else
+        else // if message type is notification
             return (
                 <div className='row info' key={index}>
                     <div className='col-md-2 timestamp'>
